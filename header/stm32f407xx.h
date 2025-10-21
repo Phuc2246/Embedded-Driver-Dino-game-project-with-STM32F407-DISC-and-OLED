@@ -81,6 +81,7 @@ typedef struct
 #define GPIOH_CLK_ENB()          (RCC->AHB1ENR |= (0x01U << 7U))
 #define GPIOI_CLK_ENB()          (RCC->AHB1ENR |= (0x01U << 8U))
 
+/*value*/
 #define BIT_RESET 0
 #define BIT_SET   1
 #endif

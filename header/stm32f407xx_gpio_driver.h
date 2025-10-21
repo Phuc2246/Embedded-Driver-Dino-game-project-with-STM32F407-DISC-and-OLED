@@ -6,6 +6,7 @@ typedef struct
     uint8_t GPIO_PinNumber; /*GPIO pin numbers*/
     uint8_t GPIO_Pinmode;   /*GPIO output mode*/
     uint8_t GPIO_OutType;   /*GPIO output type*/
+    uint8_t GPIO_PUPD;      /*pull-up pull down register selection*/
 } GPIO_PinConf_t;
 
 #define GPIO_PIN_NUM_0      0
@@ -34,7 +35,16 @@ typedef struct
 #define GPIO_OUT_PP         0
 #define GPIO_OUT_OD         1
 
+/*gpio pupd*/
+#define GPIO_NO_PUPD        0
+#define GPIO_PU             1
+#define GPIO_PD             2
+
+
 void GPIO_Init(GPIO_RegDef_t * GPIOx, GPIO_PinConf_t PinConf);
 void GPIO_PinWrite(GPIO_RegDef_t * GPIOx, uint8_t PinNumber, uint8_t Value);
+void GPIO_PinToggle(GPIO_RegDef_t * GPIOx, uint8_t PinNumber);
+
+uint8_t GPIO_PinRead(GPIO_RegDef_t * GPIOx, uint8_t PinNumber);
 
 #endif
