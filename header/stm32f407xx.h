@@ -74,7 +74,21 @@ typedef struct
     volatile uint32_t PR;
 } EXTI_RegDef_t;
 
+/*USART register definition struct*/
+typedef struct 
+{
+    volatile uint32_t SR;
+    volatile uint32_t DR;
+    volatile uint32_t BRR;
+    volatile uint32_t CR1;
+    volatile uint32_t CR2;
+    volatile uint32_t CR3;
+    volatile uint32_t GTPR;
+} USART_RegDef_t;
+
 #define AHB1_BASSADDR               (0x40020000U) /*AHB1 bass address*/
+
+#define APB1_BASEADDR               (0x40000000U) /*APB1 base address*/
 
 #define APB2_BASEADDR               (0x40010000UL) /*APB2 base address*/
 
@@ -94,10 +108,20 @@ typedef struct
 #define RCC     ((RCC_RegDef_t *)  (AHB1_BASSADDR + 0x3800UL))
 
 /*SYSCFG base address*/
-#define SYSCFG ((SYSCFG_RegDef_t *) (APB2_BASEADDR + 0x3800UL))
+#define SYSCFG  ((SYSCFG_RegDef_t *) (APB2_BASEADDR + 0x3800UL))
 
 /*EXTI base address*/
-#define EXTI ((EXTI_RegDef_t*) (APB2_BASEADDR + 0x3C00UL))
+#define EXTI    ((EXTI_RegDef_t*) (APB2_BASEADDR + 0x3C00UL))
+
+/* USART peripheral base address */
+#define USART1  ((USART_RegDef_t *) (APB2_BASEADDR + 0x1000UL))   /* USART 1 peripheral base address */
+#define USART2  ((USART_RegDef_t *) (APB1_BASEADDR + 0x4400UL))   /* USART 2 peripheral base address */
+#define USART3  ((USART_RegDef_t *) (APB1_BASEADDR + 0x4800UL))   /* USART 3 peripheral base address */
+#define UART4   ((USART_RegDef_t *) (APB1_BASEADDR + 0x4C00UL))   /* UART 4 peripheral base address */
+#define UART5   ((USART_RegDef_t *) (APB1_BASEADDR + 0x5000UL))   /* UART 5 peripheral base address */
+#define USART6  ((USART_RegDef_t *) (APB2_BASEADDR + 0x1400UL))   /* USART 6 peripheral base address */
+
+
 
 /*GPIO clock enable*/
 #define GPIOA_CLK_ENB()     (RCC->AHB1ENR |= (0x01U << 0U)) /*GPIOA peripheral clock enable*/
@@ -111,6 +135,14 @@ typedef struct
 #define GPIOI_CLK_ENB()     (RCC->AHB1ENR |= (0x01U << 8U)) /*GPIOI peripheral clock enable*/
 
 #define SYSCFG_CLK_ENB()    (RCC->APB2ENR |= (0x01U << 14U)) /*SYSCFG peripheral clock enable*/
+
+#define USART1_CLK_ENB()    (RCC->RCC_APB2RSTR |= (0x01U << 4U)) /*USART1 peripheral clock enable*/
+#define USART6_CLK_ENB()    (RCC->RCC_APB2RSTR |= (0x01U << 5U)) /*USART6 peripheral clock enable*/
+#define USART2_CLK_ENB()    (RCC->APB1ENR |= (0x01U << 17))  /* USART2 peripheral clock enable */
+#define USART3_CLK_ENB()    (RCC->APB1ENR |= (0x01U << 18))  /* USART3 peripheral clock enable */
+#define UART4_CLK_ENB()     (RCC->APB1ENR |= (0x01U << 19))  /* UART4 peripheral clock enable */
+#define UART5_CLK_ENB()     (RCC->APB1ENR |= (0x01U << 20))  /* UART5 peripheral clock enable */
+
 
 #define BIT_RESET   0
 #define BIT_SET     1

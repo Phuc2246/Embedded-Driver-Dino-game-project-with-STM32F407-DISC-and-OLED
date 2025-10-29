@@ -12,6 +12,21 @@ void GPIO_Init(GPIO_RegDef_t * GPIOx, GPIO_PinConf_t PinConf)
     {
         GPIOx->OTYPER |= (PinConf.GPIO_OutType << PinConf.GPIO_PinNumber);
     }
+    if ( PinConf.GPIO_PinMode == GPIO_MODE_ALT )
+    {
+        if (PinConf.GPIO_PinNumber < 8)
+        {
+            /*Configure the alternate function low register*/
+            GPIOx->AFRL &= ~(0x0F << PinConf.GPIO_PinNumber * 4);
+            GPIOx->AFRL |= (PinConf.GPIO_AltFunc << PinConf.GPIO_PinNumber * 4);
+        }
+        else
+        {
+            /*Configure the alternate function high register*/
+            GPIOx->AFRH &= ~(0x0F << (PinConf.GPIO_PinNumber - 8) * 4);
+            GPIOx->AFRH |= (PinConf.GPIO_AltFunc << (PinConf.GPIO_PinNumber - 8) * 4);
+        }
+    }
 }
 
 void GPIO_PinWrite(GPIO_RegDef_t * GPIOx, uint8_t PinNumber, uint8_t Value)

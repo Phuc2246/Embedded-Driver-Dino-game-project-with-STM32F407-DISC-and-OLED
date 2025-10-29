@@ -1,4 +1,9 @@
 #include "stm32f407xx_gpio_driver.h"
+/**
+ * @brief 
+ * 
+ * @param miliseconds 
+ */
 
 void delayms(uint32_t miliseconds)
 {
@@ -41,14 +46,14 @@ int main(void)
     {
         // if (BIT_SET == GPIO_PinRead(GPIOA, GPIO_PIN_NUM_0))
         // {
-        //     delayms(2);
+            //     delayms(2);
 
         //     if (BIT_SET == GPIO_PinRead(GPIOA, GPIO_PIN_NUM_0))
         //     {
         //         GPIO_PinToggle(GPIOD, GPIO_PIN_NUM_12);
         //     }
         // }
-    }
+    }   
 
     return 0;
 }

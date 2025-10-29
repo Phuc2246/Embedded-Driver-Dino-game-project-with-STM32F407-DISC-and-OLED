@@ -9,6 +9,7 @@ typedef struct
     uint8_t GPIO_OutType;               /*GPIO output type*/
     uint8_t GPIO_PUPD;                  /*Pull-up/pull-down resistor selection*/
     uint8_t GPIO_EdgeTrigger;           /*Edge trigger selection*/
+    uint8_t GPIO_AltFunc;               /*Alternate function*/
 } GPIO_PinConf_t;
 
 /*GPIO pin number*/
@@ -48,6 +49,24 @@ typedef struct
 #define GPIO_IT_EDGE_FT         0
 #define GPIO_IT_EDGE_RT         1
 
+/*Alternate function*/
+#define GPIO_ALT_AF0            0U   /* SYS: MCO, RTC, SWD/JTAG,... */
+#define GPIO_ALT_AF1            1U   /* TIM1, TIM2 */
+#define GPIO_ALT_AF2            2U   /* TIM3, TIM4, TIM5 */
+#define GPIO_ALT_AF3            3U   /* TIM8, TIM9, TIM10, TIM11 */
+#define GPIO_ALT_AF4            4U   /* I2C1, I2C2, I2C3 */
+#define GPIO_ALT_AF5            5U   /* SPI1, SPI2 */
+#define GPIO_ALT_AF6            6U   /* SPI3 (I2S3) */
+#define GPIO_ALT_AF7            7U   /* USART1, USART2, USART3 */
+#define GPIO_ALT_AF8            8U   /* UART4, UART5, USART6 */
+#define GPIO_ALT_AF9            9U   /* CAN1, CAN2, TIM12/13/14.. */
+#define GPIO_ALT_AF10           10U  /* USB OTG FS/HS (tùy chân) */
+#define GPIO_ALT_AF11           11U  /* Ethernet (ETH) */
+#define GPIO_ALT_AF12           12U  /* FSMC/FMC, SDIO */
+#define GPIO_ALT_AF13           13U  /* DCMI */
+#define GPIO_ALT_AF14           14U 
+#define GPIO_ALT_AF15           15U  /* EVENTOUT */
+
 
 /*Macro to get GPIO port code for SYSCFG_EXTICR register configuration*/
 #define SYSCFG_EXTICR_PORTCODE(GPIOx)\
@@ -75,5 +94,5 @@ void GPIO_Init(GPIO_RegDef_t * GPIOx, GPIO_PinConf_t PinConf);
 void GPIO_PinWrite(GPIO_RegDef_t * GPIOx, uint8_t PinNumber, uint8_t Value);
 void GPIO_PinToggle(GPIO_RegDef_t * GPIOx, uint8_t PinNumber);
 uint8_t GPIO_PinRead(GPIO_RegDef_t * GPIOx, uint8_t PinNumber);
-void GPIO_IT_Init(GPIO_RegDef_t * GPIOx, GPIO_PinConf_t GPIOPinConf, uint8_t Priority);
+void GPIO_IT_Init(GPIO_RegDef_t * GPIOx, GPIO_PinConf_t GPIOPinConf, uint8_t Priority);//interrupt
 #endif
