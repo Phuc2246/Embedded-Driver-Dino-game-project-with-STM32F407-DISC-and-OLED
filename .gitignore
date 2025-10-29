@@ -1,0 +1,27 @@
+# VSCode
+.vscode/
+
+# Keil MDK / uVision
+Listings/
+Objects/
+RTE/
+*.uvguix.*
+*.uvoptx
+*.uvprojx.bak
+*.scvd
+
+# Build artifacts
+*.o
+*.d
+*.axf
+*.elf
+*.map
+*.lst
+*.hex
+*.bin
+*.sct
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
