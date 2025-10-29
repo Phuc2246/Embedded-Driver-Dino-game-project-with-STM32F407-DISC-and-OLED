@@ -5,6 +5,6 @@
 
 > Mini game (Chrome Dino) on STM32F407 + SSD1306 OLED.
 
-![cover](docs/images/cover.png)
+![cover](docs/images/DINO.jpg)
 
 ## Repository Layout
