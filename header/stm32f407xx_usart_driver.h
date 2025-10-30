@@ -85,8 +85,8 @@ typedef struct
 void USART_PeriphClockCtrl(USART_RegDef_t *USARTx, uint8_t EnOrDi);
 /* Function ptorotypes */
 void USART_Init(USART_RegDef_t * USARTx, USART_Config_t USART_Conf);
-void USART_Transmit(USART_RegDef_t * USARTx, uint8_t * Mess, uint8_t MessSize);
-void USART_Receive(USART_RegDef_t * USARTx, uint8_t * Mess, uint8_t MessSize);
+void USART_Transmit(USART_RegDef_t * USARTx, uint8_t * Mess, uint8_t MessSize);//truyen 
+void USART_Receive(USART_RegDef_t * USARTx, uint8_t * Mess, uint8_t MessSize);//nhan 
 
 
 

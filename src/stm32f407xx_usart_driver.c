@@ -44,6 +44,7 @@ uint32_t RCC_GetPCLK1Val(void)
 
     /*Clock source in the MCU*/
     Clk_Src = (RCC->CFGR >> 2) & 0x03;
+    /*Đọc 2 bit [3:2] (SWS) của thanh ghi RCC->CFGR để biết hệ thống đang chạy bằng nguồn clock nào.*/
 
     switch (Clk_Src)
     {
@@ -96,6 +97,7 @@ uint32_t RCC_GetPCLK1Val(void)
     }
     /*Set peripheral clock*/
     P_Clk1 = (SYS_Clk / AHB_Pre) / APB1_Pre;
+    /*Tần số APB1 = (Tần số hệ thống / Bộ chia AHB) / Bộ chia APB1.*/
 
     return P_Clk1;
 }

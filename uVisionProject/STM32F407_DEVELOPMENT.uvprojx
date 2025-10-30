@@ -399,6 +399,11 @@
               <FileType>1</FileType>
               <FilePath>..\src\cortexM4.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f407xx_usart_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\stm32f407xx_usart_driver.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
