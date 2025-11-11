@@ -105,7 +105,7 @@ sudo usermod -a -G dialout $USER
 ```
 ## Support
 
-- **Email**: [Contact the developer](mailto:khanhtrannguyen1609@gmail.com)
+- **Email**: [Contact the developer](mailto:phucdep1237@gmail.com)
 
 ---
 
