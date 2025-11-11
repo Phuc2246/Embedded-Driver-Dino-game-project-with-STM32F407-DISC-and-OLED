@@ -1,17 +1,4 @@
 #include "stm32f407xx_usart_driver.h"
-void USART_PeriphClockCtrl(USART_RegDef_t *USARTx, uint8_t EnOrDi)
-{
-    if (EnOrDi)
-    {
-        if (USARTx == USART1) { RCC->APB2ENR |= (1U << 4); }      /* USART1EN */
-        else if (USARTx == USART6) { RCC->APB2ENR |= (1U << 5); } /* USART6EN */
-    }
-    else
-    {
-        if (USARTx == USART1) { RCC->APB2ENR &= ~(1U << 4); }
-        else if (USARTx == USART6) { RCC->APB2ENR &= ~(1U << 5); }
-    }
-}
 
 /*AHB prescaler*/
 uint16_t AHB_PreScaler[8] = {2, 4, 8, 16, 64, 128, 256, 512};
@@ -44,7 +31,6 @@ uint32_t RCC_GetPCLK1Val(void)
 
     /*Clock source in the MCU*/
     Clk_Src = (RCC->CFGR >> 2) & 0x03;
-    /*Đọc 2 bit [3:2] (SWS) của thanh ghi RCC->CFGR để biết hệ thống đang chạy bằng nguồn clock nào.*/
 
     switch (Clk_Src)
     {
@@ -97,7 +83,6 @@ uint32_t RCC_GetPCLK1Val(void)
     }
     /*Set peripheral clock*/
     P_Clk1 = (SYS_Clk / AHB_Pre) / APB1_Pre;
-    /*Tần số APB1 = (Tần số hệ thống / Bộ chia AHB) / Bộ chia APB1.*/
 
     return P_Clk1;
 }
@@ -179,7 +164,7 @@ uint32_t RCC_GetPCLK2Val(void)
  * 
  * @return None
  */
-void USART_Init(USART_RegDef_t * USARTx, USART_Config_t USART_Conf)
+void USART_Init(USART_RegDef_t * USARTx, USART_Conf_t USART_Conf)
 {
     uint32_t USARTDIV;
     uint32_t Mantissa, Fraction, Remainder, Scaling;
@@ -187,13 +172,13 @@ void USART_Init(USART_RegDef_t * USARTx, USART_Config_t USART_Conf)
     /*1. Set wordlength in CR1 register*/
     USARTx->CR1 |= (USART_Conf.WordLength << USART_CR1_M);
     /*2. Set parity in CR1 register*/
-    USARTx->CR1 &= ~(0x03U << USART_CR1_PS);//2 bit bao gom parity even(odd) và parity control
+    USARTx->CR1 &= ~(0x03U << USART_CR1_PS);
     USARTx->CR1 |= (USART_Conf.Parity << USART_CR1_PS);
     /*3. Set USART mode in CR1 register*/
     USARTx->CR1 &= ~(0x03U << USART_CR1_RE);
     USARTx->CR1 |= (USART_Conf.Mode << USART_CR1_RE);
     /*4. Set oversampling in CR1 register*/
-    USARTx->CR1 |= (USART_Conf.Oversampling << USART_CR1_OVER8);
+    USARTx->CR1 |= (USART_Conf.OverSampling << USART_CR1_OVER8);
     /*5. Set stop bit in CR2 register*/
     USARTx->CR2 &= ~(0x03U << USART_CR2_STOP);
     USARTx->CR2 |= (USART_Conf.StopBits << USART_CR2_STOP);
@@ -206,7 +191,7 @@ void USART_Init(USART_RegDef_t * USARTx, USART_Config_t USART_Conf)
     {
         USARTx_Clk = RCC_GetPCLK1Val(); 
     }
-    Scaling = 8 * (2 - USART_Conf.Oversampling);
+    Scaling = 8 * (2 - USART_Conf.OverSampling);
     USARTDIV = (USARTx_Clk / (Scaling * USART_Conf.BaudRate));
     Mantissa = USARTDIV;
     Remainder = (USARTx_Clk % (Scaling * USART_Conf.BaudRate));
@@ -237,8 +222,8 @@ void USART_Transmit(USART_RegDef_t * USARTx, uint8_t * Mess, uint8_t MessSize)
     TxBufCounter = MessSize;
     /* Check the wordlength; If it is 9 bit wordlength, 
     then use the 16bit data pointer to handle the transmittion */
-    if ((((USARTx->CR1 >> USART_CR1_M) & 0x01) == USART_WORDLEN_9BITS)\
-    && (((USARTx->CR1 >> USART_CR1_PS) & 0x01) == USART_PARITY_DISABLE))
+    if ((((USARTx->CR1 >> USART_CR1_M) & 0x01) == USART_WORDLENGTH_9B)\
+    && (((USARTx->CR1 >> USART_CR1_PS) & 0x01) == USART_PARITY_NONE))
     {
         /*9 bit word length; None parity control*/
         pData8bit = NULL;
@@ -296,8 +281,8 @@ void USART_Receive(USART_RegDef_t * USARTx, uint8_t * Mess, uint8_t MessSize)
     RxBufCounter = MessSize;
     /* Check the wordlength; If it is 9 bit wordlength, 
     then use the 16bit data pointer to handle the reception */
-    if ((((USARTx->CR1 >> USART_CR1_M) & 0x01) == USART_WORDLEN_9BITS)\
-    && (((USARTx->CR1 >> USART_CR1_PS) & 0x01) == USART_PARITY_DISABLE))
+    if ((((USARTx->CR1 >> USART_CR1_M) & 0x01) == USART_WORDLENGTH_9B)\
+    && (((USARTx->CR1 >> USART_CR1_PS) & 0x01) == USART_PARITY_NONE))
     {
         /*9 bit word length; None parity control*/
         pData8bit = NULL;
@@ -328,9 +313,9 @@ void USART_Receive(USART_RegDef_t * USARTx, uint8_t * Mess, uint8_t MessSize)
             {
                 /*Handle 8 bit reception*/
                 /*Is 9 bit word length OR (8 bit word length AND none parity)*/
-                if (((USARTx->CR1 >> USART_CR1_M & 0x01) == USART_WORDLEN_9BITS)\
-                || (((USARTx->CR1 >> USART_CR1_M & 0x01) == USART_WORDLEN_8BITS) 
-                && (((USARTx->CR1 >> USART_CR1_PS) & 0x01) == USART_PARITY_DISABLE)))
+                if (((USARTx->CR1 >> USART_CR1_M & 0x01) == USART_WORDLENGTH_9B)\
+                || (((USARTx->CR1 >> USART_CR1_M & 0x01) == USART_WORDLENGTH_8B) 
+                && (((USARTx->CR1 >> USART_CR1_PS) & 0x01) == USART_PARITY_NONE)))
                 {
                     /*Handle 8 bit reception*/
                     *pData8bit = (uint8_t) (USARTx->DR & 0x00FF);

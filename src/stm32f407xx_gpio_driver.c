@@ -1,8 +1,13 @@
 #include "stm32f407xx_gpio_driver.h"
 
+/**
+ * @brief This function initilize GPIOx peripheral
+ * 
+ * @param GPIOx GPIO peripheral to be initialized
+ * @param PinConf Pin configuration struct
+ */
 void GPIO_Init(GPIO_RegDef_t * GPIOx, GPIO_PinConf_t PinConf)
 {
-    /*uint8_t PinNum = PinConf.GPIO_PinNumber; */
     /*Initialize pin mode*/
     GPIOx->MODER &= ~(0x03 << PinConf.GPIO_PinNumber * 2);
     GPIOx->MODER |= (PinConf.GPIO_PinMode << PinConf.GPIO_PinNumber * 2);
@@ -12,7 +17,8 @@ void GPIO_Init(GPIO_RegDef_t * GPIOx, GPIO_PinConf_t PinConf)
     {
         GPIOx->OTYPER |= (PinConf.GPIO_OutType << PinConf.GPIO_PinNumber);
     }
-    if ( PinConf.GPIO_PinMode == GPIO_MODE_ALT )
+
+    if (PinConf.GPIO_PinMode == GPIO_MODE_ALT)
     {
         if (PinConf.GPIO_PinNumber < 8)
         {
