@@ -9,19 +9,7 @@
  */
 void NVIC_SetPriority(uint8_t IRQNumber, uint8_t Priority)
 {
-    uint8_t index, bitpos;//Vì sao có index và bitpos?
-    /*Mỗi thanh ghi NVIC->IPR[x] là 32-bit, chứa 4 ô priority, mỗi ô 8 bit
-    index là chỉ số đại diện như i trong mảng 
-    vd lấy IRQ_NO_EXTI0        6U/4U=1 sẽ lấy IPR[1]
-    bitpos = (IRQNumber % 4) * 8  -> byte offset (tính theo bit) của IRQ đó trong IPR[index].
-    [7:0] Priority, byte offset = 0
-    [15:8] Priority, byte offset = 1
-    [23:16] Priority, byte offset = 2
-    [31:24] Priority, byte offset = 3
-==>6 % 4 = 2 → 2 * 8 = 16 ô priority nằm ở bit [23:16] của IPR[1].
-Trên Cortex-M4, chỉ 4 bit cao của byte priority có tác dụng: [7:4] trong mỗi byte.
-Bốn bit có tác dụng chính là [23:20], tức là (bitpos + 4) … (bitpos + 7).
-    */
+    uint8_t index, bitpos;
 
     /*Specify the NVIC_IPRx register index*/
     index = IRQNumber / 4U;

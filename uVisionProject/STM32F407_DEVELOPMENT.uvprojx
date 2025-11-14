@@ -409,6 +409,21 @@
               <FileType>1</FileType>
               <FilePath>..\src\stm32f407xx_timer_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>dino_game.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\dino_game.c</FilePath>
+            </File>
+            <File>
+              <FileName>ssd1306.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\ssd1306.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f407xx_i2c_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\src\stm32f407xx_i2c_driver.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

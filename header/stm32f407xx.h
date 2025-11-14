@@ -75,6 +75,10 @@ typedef struct
 } EXTI_RegDef_t;
 
 /*USART register definition struct*/
+/*TODO-----------------------------------------------*/
+/*USART_RegDef_t*/
+
+/*USART register definition struct*/
 typedef struct 
 {
   volatile uint32_t SR;

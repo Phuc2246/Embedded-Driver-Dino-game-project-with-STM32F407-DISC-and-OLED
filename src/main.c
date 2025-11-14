@@ -205,6 +205,10 @@ int main(void)
     // uint16_t Timer6DelayCounter = 0U;
     while (1)
     {
+        /*TODO-------------------------------------------------*/
+        /*Compare buffer*/
+        /*Control LED*/
+        /*Is new data available?*/
         if (IsRxAvailable == TRUE)
         {
             USART3_RXNEIE_DIS();
@@ -261,6 +265,10 @@ int main(void)
 void EXTI0_IRQHandler(void)
 {
 
+    
+    /*TODO----------------------------------------------------------*/
+    /*Thay the delayms bang timer interrupt de chong doi nut nhan*/
+    // delayms(1);
     /*Clear pending interrupt bit in EXTI_PR*/
     // EXTI->PR |= (0x01 << GPIOA_PinConf.GPIO_PinNumber);
         /*Start timer 6*/
@@ -282,6 +290,10 @@ void USART3_IRQHandler(void)
     /*Check if the receive register is not empty*/
     if ((USART3->SR >> USART_SR_RXNE) & 0x01U)
     {
+        /*TODO-------------------------------------------------*/
+        /*USART_Reseive()*/
+        /*Push character to buffer*/
+
         /*Read received data*/
         RxData = USART3->DR;
         /*Check overflow status and store data*/
@@ -305,6 +317,8 @@ void USART3_IRQHandler(void)
     }
 }
 
+/*TODO-----------------------------------------------------------*/
+/*Viet timer base interrupt*/
 /**
  * @brief This is interrupt service routine for Timer 6 and DAC
  * 
